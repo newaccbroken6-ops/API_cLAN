@@ -45,7 +45,19 @@ async def get_clan_data_async():
 @app.route('/', methods=['GET'])
 def health_check():
     """Health check endpoint"""
-    return jsonify({"status": "ok", "message": "Clan data server is running"})
+    return jsonify({"status": "ok", "message": "Clan data server is running", "timestamp": "2025-10-22T11:30:00Z"})
+
+@app.route('/health', methods=['GET'])
+def health_check_extended():
+    """Extended health check endpoint"""
+    return jsonify({
+        "status": "ok", 
+        "message": "Clan data server is running",
+        "service": "npt-clan-api",
+        "version": "1.0.0"
+    })
 
 if __name__ == '__main__':
-    app.run(host='localhost', port=5000, debug=True)
+    # Get port from environment variable or default to 5000
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port, debug=False)
